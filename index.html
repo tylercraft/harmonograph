@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Harmonograph</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="root" id="root" data-theme="dark">
+
+  <canvas id="ambient" class="canvas-layer" aria-hidden="true"></canvas>
+  <canvas id="halo"    class="canvas-layer" aria-hidden="true"></canvas>
+  <canvas id="body-c"  class="canvas-layer" aria-hidden="true"></canvas>
+  <canvas id="fog"     class="canvas-layer" aria-hidden="true"></canvas>
+
+  <div class="ui">
+
+    <main class="scroll-area">
+
+      <section class="section" aria-labelledby="meetings-label">
+        <div class="sec-label" id="meetings-label">Meetings</div>
+        <div class="items" id="meetings-list">
+          <p class="loading" aria-live="polite">Loading…</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="tasks-label">
+        <div class="sec-label" id="tasks-label">Tasks</div>
+        <div class="items" id="tasks-list">
+          <p class="loading" aria-live="polite">Loading…</p>
+        </div>
+      </section>
+
+      <div class="scroll-spacer" aria-hidden="true"></div>
+    </main>
+
+    <div class="clock-bar" id="clock-bar" role="list" aria-label="World clocks"></div>
+
+  </div>
+
+  <!-- Settings gear button -->
+  <button class="settings-btn" id="settings-btn" aria-label="Open settings">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </button>
+
+  <!-- Settings overlay -->
+  <div class="sp-overlay" id="sp-overlay" aria-hidden="true"></div>
+
+  <!-- Settings panel -->
+  <aside class="sp-panel" id="sp-panel" aria-label="Settings" aria-hidden="true">
+    <div class="sp-header">
+      <span class="sp-title">Settings</span>
+      <button class="sp-close" id="sp-close" aria-label="Close settings">×</button>
+    </div>
+
+    <div class="sp-body">
+
+      <div class="sp-section">
+        <div class="sp-label">Linear</div>
+        <input class="sp-input" id="sp-linear-key" type="password" placeholder="lin_api_…" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div class="sp-section">
+        <div class="sp-label">Theme</div>
+        <div class="sp-theme-grid">
+          <div class="sp-theme-row">
+            <button class="sp-swatch sp-swatch--dark"      data-theme="dark"      title="Dark" type="button"></button>
+            <button class="sp-swatch sp-swatch--dark-warm" data-theme="dark-warm" title="Dark warm" type="button"></button>
+            <button class="sp-swatch sp-swatch--dark-blue" data-theme="dark-blue" title="Dark blue" type="button"></button>
+            <button class="sp-swatch sp-swatch--dark-red"  data-theme="dark-red"  title="Dark red" type="button"></button>
+          </div>
+          <div class="sp-theme-row">
+            <button class="sp-swatch sp-swatch--light" data-theme="light" title="Light" type="button"></button>
+            <button class="sp-swatch sp-swatch--warm"  data-theme="warm"  title="Warm" type="button"></button>
+            <button class="sp-swatch sp-swatch--blue"  data-theme="blue"  title="Blue" type="button"></button>
+            <button class="sp-swatch sp-swatch--red"   data-theme="red"   title="Red" type="button"></button>
+          </div>
+          <label class="sp-theme-auto">
+            <input type="checkbox" id="sp-theme-auto"> Follow system
+          </label>
+        </div>
+      </div>
+
+      <div class="sp-section">
+        <div class="sp-label">Clocks</div>
+        <div id="sp-clocks"></div>
+        <button class="sp-add-btn" id="sp-add-clock" type="button">+ Add timezone</button>
+      </div>
+
+      <div class="sp-section">
+        <div class="sp-label">Calendars</div>
+        <div id="sp-calendars"></div>
+      </div>
+
+    </div>
+
+    <div class="sp-footer">
+      <button class="sp-save" id="sp-save" type="button">Save</button>
+      <a class="sp-byline" href="https://tylercraft.com" target="_blank" rel="noopener">by Tyler Craft</a>
+    </div>
+  </aside>
+
+</div>
+
+<script src="config.js"></script>
+<script src="js/stub.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/background.js"></script>
+<script src="js/clocks.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/linear.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
