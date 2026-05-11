@@ -123,12 +123,15 @@ function buildEventEl(event) {
 
 function renderCalendar(events, unauthAccounts) {
   const container = document.getElementById('meetings-list');
+  const section   = container.closest('section');
   container.innerHTML = '';
 
   if (unauthAccounts.length > 0 && events.length === 0) {
-    container.innerHTML = '<p class="empty-state">Connect your calendar in Settings.</p>';
+    section.hidden = true;
     return;
   }
+
+  section.hidden = false;
 
   if (events.length === 0) {
     container.innerHTML = '<p class="empty-state">Nothing else today</p>';

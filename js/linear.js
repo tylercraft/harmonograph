@@ -88,11 +88,14 @@ function buildTaskEl(task) {
 
 function renderTasks(tasks) {
   const container = document.getElementById('tasks-list');
+  const section   = container.closest('section');
 
   if (tasks === null) {
-    container.innerHTML = '<p class="empty-state">Add your Linear API key in Settings.</p>';
+    section.hidden = true;
     return;
   }
+
+  section.hidden = false;
 
   if (tasks === false) {
     container.innerHTML = '<p class="error-state">Couldn\'t load tasks.</p>';
