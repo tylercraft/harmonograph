@@ -91,11 +91,11 @@ function renderTasks(tasks) {
   const section   = container.closest('section');
 
   if (tasks === null) {
-    section.hidden = true;
+    section.style.display = 'none';
     return;
   }
 
-  section.hidden = false;
+  section.style.display = '';
 
   if (tasks === false) {
     container.innerHTML = '<p class="error-state">Couldn\'t load tasks.</p>';

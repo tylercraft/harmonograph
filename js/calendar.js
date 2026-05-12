@@ -127,11 +127,11 @@ function renderCalendar(events, unauthAccounts) {
   container.innerHTML = '';
 
   if (unauthAccounts.length > 0 && events.length === 0) {
-    section.hidden = true;
+    section.style.display = 'none';
     return;
   }
 
-  section.hidden = false;
+  section.style.display = '';
 
   if (events.length === 0) {
     container.innerHTML = '<p class="empty-state">Nothing else today</p>';
