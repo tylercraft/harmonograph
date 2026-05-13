@@ -189,7 +189,9 @@
     btn.textContent = 'Saving…';
     btn.disabled = true;
 
+    const existing = await loadSettings();
     const s = {
+      ...existing,
       linearApiKey:      document.getElementById('sp-linear-key').value.trim(),
       theme:             document.getElementById('sp-theme-auto').checked
                            ? 'auto'

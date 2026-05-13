@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Harmonograph",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Personal new tab for a freelance frontend developer.",
 
   "chrome_url_overrides": {
